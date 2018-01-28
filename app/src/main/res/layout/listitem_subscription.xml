@@ -13,8 +13,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Name"
         android:textAppearance="@android:style/TextAppearance.Large" />
@@ -33,17 +33,17 @@
         android:textAppearance="@android:style/TextAppearance.Large" />
 
     <TextView
-        android:id="@+id/subscription_date"
+        android:id="@+id/subscription_comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/subscription_name"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Date" />
+        android:text="Comment" />
 
     <TextView
-        android:id="@+id/subscription_comment"
+        android:id="@+id/subscription_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/subscription_charge"
@@ -52,5 +52,5 @@
         android:layout_marginRight="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:text="Comment" />
+        android:text="Date" />
 </RelativeLayout>
