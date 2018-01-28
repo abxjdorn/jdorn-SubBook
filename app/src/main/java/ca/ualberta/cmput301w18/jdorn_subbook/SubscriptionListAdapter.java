@@ -2,11 +2,14 @@ package ca.ualberta.cmput301w18.jdorn_subbook;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import java.util.Locale;
 
 /**
  * ListAdapter that wraps a SubscriptionList in a ListView-able form.
@@ -43,8 +46,8 @@ public class SubscriptionListAdapter extends ArrayAdapter<Subscription> {
         
         
         nameView.setText(subscription.getName());
-        dateView.setText(subscription.getDate().toString());
-        chargeView.setText(subscription.getCharge().toString());
+        dateView.setText(DateFormat.format("yyyy-MM-dd", subscription.getDate()));
+        chargeView.setText(subscription.getChargeAsString());
         commentView.setText(subscription.getComment());
         
         return view;

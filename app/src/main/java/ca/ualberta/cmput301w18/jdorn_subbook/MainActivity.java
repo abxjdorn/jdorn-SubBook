@@ -17,9 +17,13 @@ public class MainActivity extends ListActivity {
         
         // temporary
         try {
-            Subscription testSubscription = new Subscription("TEST",
-                    new Date(2018, 1,5), 2222, "");
-            subscriptionList.addSubscription(testSubscription);
+            Subscription testSubscription1 = new Subscription("Subscription 1",
+                    new Date(118, 1,5), 2222, "");
+            subscriptionList.addSubscription(testSubscription1);
+            Subscription testSubscription2 = new Subscription("Subscription 2",
+                    new Date(118, 1, 7), 2345,
+                    "This is a thirty char comment.");
+            subscriptionList.addSubscription(testSubscription2);
         } catch (InvalidSubscriptionParameterException e) {
             e.printStackTrace();
         }

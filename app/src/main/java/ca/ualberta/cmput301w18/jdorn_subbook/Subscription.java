@@ -1,6 +1,7 @@
 package ca.ualberta.cmput301w18.jdorn_subbook;
 
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Entity class representing a single subscription.
@@ -45,6 +46,14 @@ public class Subscription {
     /** Returns the charge of the subscription, as an integer number of cents. */
     public Integer getCharge() {
         return this.charge;
+    }
+    
+    /** Returns a string representation of the charge of the subscription.
+     * (This implementation probably isn't readily localizable.)
+     */
+    public String getChargeAsString() {
+        return String.format(Locale.getDefault(),
+                "$%d.%d", this.charge/100, this.charge%100);
     }
     
     /** Returns the comment attached to the subscription (which may be empty). */
