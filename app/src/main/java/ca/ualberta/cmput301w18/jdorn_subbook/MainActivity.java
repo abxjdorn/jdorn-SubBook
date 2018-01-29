@@ -1,8 +1,10 @@
 package ca.ualberta.cmput301w18.jdorn_subbook;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import java.util.Date;
 
@@ -29,5 +31,14 @@ public class MainActivity extends ListActivity {
         }
         
         this.setListAdapter(new SubscriptionListAdapter(this, subscriptionList));
+        
+        // Set interaction handlers
+        this.findViewById(R.id.button_add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(this, EditSubscriptionActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
