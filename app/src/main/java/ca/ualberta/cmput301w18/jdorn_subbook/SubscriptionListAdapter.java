@@ -46,7 +46,7 @@ public class SubscriptionListAdapter extends ArrayAdapter<Subscription> {
         
         
         nameView.setText(subscription.getName());
-        dateView.setText(DateFormat.format("yyyy-MM-dd", subscription.getDate()));
+        dateView.setText(subscription.getDateAsString());
         chargeView.setText(subscription.getChargeAsString());
         commentView.setText(subscription.getComment());
         

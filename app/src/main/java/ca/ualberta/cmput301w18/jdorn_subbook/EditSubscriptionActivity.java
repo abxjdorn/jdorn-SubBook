@@ -3,6 +3,7 @@ package ca.ualberta.cmput301w18.jdorn_subbook;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.EditText;
 
 import java.util.Date;
 
@@ -21,16 +22,38 @@ public class EditSubscriptionActivity extends Activity {
         Subscription subscription = (Subscription) intent.getSerializableExtra(
                 MainActivity.EXTRA_TARGET_DATA);
         
-        if (subscription == null) {
-            try {
-                subscription = new Subscription(
-                        "New Subscription", new Date(118, 1, 31),
-                        1234, "new");
-            } catch (InvalidSubscriptionParameterException e) {
-                e.printStackTrace();
-            }
+        // Populate editing fields with existing subscription data
+        if (subscription != null) {
+            EditText nameField = this.findViewById(R.id.edit_name);
+            EditText chargeField = this.findViewById(R.id.edit_charge);
+            EditText dateField = this.findViewById(R.id.edit_date);
+            EditText commentField = this.findViewById(R.id.edit_comment);
+            
+            nameField.setText(subscription.getName());
+            chargeField.setText(subscription.getChargeAsString());
+            dateField.setText(subscription.getDateAsString());
+            commentField.setText(subscription.getComment());
         }
-        intent.putExtra(EXTRA_SUBSCRIPTION_DATA, subscription);
+    }
+    
+    private void finishEditActivity() {
+        EditText nameField = this.findViewById(R.id.edit_name);
+        EditText chargeField = this.findViewById(R.id.edit_charge);
+        EditText dateField = this.findViewById(R.id.edit_date);
+        EditText commentField = this.findViewById(R.id.edit_comment);
+        
+        String name = nameField.getText().toString();
+        Integer charge = Integer.valueOf(chargeField.getText().toString());
+        Date date = new Date(dateField.getText().toString());
+        String comment = commentField.getText().toString();
+        
+        Intent intent = this.getIntent();
+        try {
+            Subscription subscription = new Subscription(name, date, charge, comment);
+            intent.putExtra(EXTRA_SUBSCRIPTION_DATA, subscription);
+        } catch (InvalidSubscriptionParameterException e) {
+            e.printStackTrace();
+        }
         
         this.setResult(RESULT_OK, intent);
         this.finish();
