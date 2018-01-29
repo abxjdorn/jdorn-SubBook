@@ -1,5 +1,6 @@
 package ca.ualberta.cmput301w18.jdorn_subbook;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Locale;
 
@@ -8,7 +9,7 @@ import java.util.Locale;
  * A Subscription has a name, date, charge, and comment,
  * all of which are mutable.
  */
-public class Subscription {
+public class Subscription implements Serializable {
     /** Name of the subscription. Limited to 20 characters; cannot be empty. */
     private String name;
     
