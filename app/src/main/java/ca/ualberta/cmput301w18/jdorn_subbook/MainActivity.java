@@ -36,7 +36,7 @@ public class MainActivity extends ListActivity {
         this.findViewById(R.id.button_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(this, EditSubscriptionActivity.class);
+                Intent intent = new Intent(getBaseContext(), EditSubscriptionActivity.class);
                 startActivity(intent);
             }
         });
