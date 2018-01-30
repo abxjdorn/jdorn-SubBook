@@ -54,7 +54,7 @@ public class EditSubscriptionActivity extends Activity {
         Intent intent = this.getIntent();
         try {
             String name = nameField.getText().toString();
-            SubscriptionCharge charge = new SubscriptionCharge(chargeField.getText().toString());
+            Integer charge = Integer.valueOf(chargeField.getText().toString());
             Date date = new Date(dateField.getText().toString());
             String comment = commentField.getText().toString();
             

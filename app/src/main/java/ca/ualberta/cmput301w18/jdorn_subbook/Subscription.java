@@ -18,13 +18,15 @@ public class Subscription implements Serializable {
     /** Date the subscription started. Cannot be empty. */
     private Date date;
     
-    /** Monthly charge of the subscription. */
-    private SubscriptionCharge charge;
+    /** Monthly charge of the subscription. Stored as an integer number of cents
+     * (so eg. $1.23 is the integer 123). Cannot be negative.
+     */
+    private Integer charge;
     
     /** Comment attached to the subscription. Limited to 30 characters. Can be empty. */
     private String comment;
     
-    public Subscription(String name, Date date, SubscriptionCharge charge, String comment)
+    public Subscription(String name, Date date, Integer charge, String comment)
             throws InvalidSubscriptionParameterException {
         // Calling the setter methods invokes validity checking without having
         // to duplicate it.
@@ -49,9 +51,17 @@ public class Subscription implements Serializable {
         return DateFormat.format("yyyy-MM-dd", this.date).toString();
     }
     
-    /** Returns the charge of the subscription. */
-    public SubscriptionCharge getCharge() {
+    /** Returns the charge of the subscription, as an integer number of cents. */
+    public Integer getCharge() {
         return this.charge;
+    }
+    
+    /** Returns a string representation of the charge of the subscription.
+     * (This implementation probably isn't readily localizable.)
+     */
+    public String getChargeAsString() {
+        return String.format(Locale.getDefault(),
+                "$%d.%d", this.charge/100, this.charge%100);
     }
     
     /** Returns the comment attached to the subscription (which may be empty). */
@@ -72,8 +82,13 @@ public class Subscription implements Serializable {
         this.date = date;
     }
     
-    /** Sets the charge of the description. */
-    public void setCharge(SubscriptionCharge charge) {
+    /** Sets the charge of the description, as an integer number of cents.
+     * Charge must not be negative.
+     */
+    public void setCharge(Integer charge) throws InvalidSubscriptionParameterException {
+        if (charge < 0) {
+            throw new InvalidSubscriptionParameterException();
+        }
         this.charge = charge;
     }
     
