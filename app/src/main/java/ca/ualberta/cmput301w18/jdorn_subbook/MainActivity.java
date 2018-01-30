@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 
+import java.io.IOException;
 import java.util.Date;
 
 public class MainActivity extends ListActivity {
@@ -19,27 +20,21 @@ public class MainActivity extends ListActivity {
     
     public static final int INDEX_NEW = -1;
     
+    private static final String FILENAME = "subscriptions";
+    
     private SubscriptionList subscriptionList;
+    private SubscriptionListLoader subscriptionListLoader;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_main);
         
-        this.subscriptionList = new SubscriptionList();
+        this.subscriptionListLoader = new SubscriptionListLoader(this, FILENAME);
         
-        // temporary
         try {
-            Subscription testSubscription1 = new Subscription("Subscription 1",
-                    new Date(118, 1,5),
-                    2222, "");
-            subscriptionList.addSubscription(testSubscription1);
-            Subscription testSubscription2 = new Subscription("Subscription 2",
-                    new Date(118, 1, 7),
-                    2345,
-                    "This is a thirty char comment.");
-            subscriptionList.addSubscription(testSubscription2);
-        } catch (InvalidSubscriptionParameterException e) {
+            this.subscriptionList = this.subscriptionListLoader.load();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         
@@ -94,6 +89,17 @@ public class MainActivity extends ListActivity {
                 // update the list view
                 ((SubscriptionListAdapter)(this.getListAdapter())).notifyDataSetChanged();
             }
+        }
+    }
+    
+    @Override
+    protected void onPause() {
+        super.onPause();
+    
+        try {
+            this.subscriptionListLoader.save(this.subscriptionList);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
     
