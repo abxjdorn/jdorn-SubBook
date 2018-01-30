@@ -18,6 +18,8 @@ public class SubscriptionListAdapter extends ArrayAdapter<Subscription> {
     /** LayoutInflater used to produce Views */
     private LayoutInflater layoutInflater;
     
+    private SubscriptionChargeConverter chargeConverter = new SubscriptionChargeConverter();
+    
     public SubscriptionListAdapter(Context context, SubscriptionList subscriptionList) {
         super(context, R.layout.listitem_subscription, subscriptionList.getSubscriptions());
         
@@ -39,15 +41,19 @@ public class SubscriptionListAdapter extends ArrayAdapter<Subscription> {
             view = convertView;
         }
         
+        // Retrieve raw parameters from subscription
         TextView nameView = view.findViewById(R.id.subscription_name);
         TextView dateView = view.findViewById(R.id.subscription_date);
         TextView chargeView = view.findViewById(R.id.subscription_charge);
         TextView commentView = view.findViewById(R.id.subscription_comment);
         
+        // Convert non-text fields to text using converters
+        this.chargeConverter.setObject(subscription.getCharge());
         
+        // Write subscription parameters to screen
         nameView.setText(subscription.getName());
         dateView.setText(subscription.getDateAsString());
-        chargeView.setText("$"+subscription.getCharge().toString());
+        chargeView.setText(String.format(Locale.US, "$%s", chargeConverter.getString()));
         commentView.setText(subscription.getComment());
         
         return view;

@@ -56,14 +56,6 @@ public class Subscription implements Serializable {
         return this.charge;
     }
     
-    /** Returns a string representation of the charge of the subscription.
-     * (This implementation probably isn't readily localizable.)
-     */
-    public String getChargeAsString() {
-        return String.format(Locale.getDefault(),
-                "$%d.%d", this.charge/100, this.charge%100);
-    }
-    
     /** Returns the comment attached to the subscription (which may be empty). */
     public String getComment() {
         return this.comment;

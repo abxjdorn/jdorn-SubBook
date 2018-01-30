@@ -14,6 +14,12 @@ package ca.ualberta.cmput301w18.jdorn_subbook;
  */
 public interface FieldConverter<T> {
     /**
+     * Return value representing a successful string
+     * to object conversion.
+     */
+    int VALID = 0;
+    
+    /**
      * Gets the string representation of the current state
      * of the FieldConverter. May be null if the converter
      * state is invalid.
@@ -30,10 +36,13 @@ public interface FieldConverter<T> {
     /**
      * Updates the FieldConverter state by setting its string.
      * The string will be converted into the target object type
-     * of the FieldConverter, if possible. If not, the object of
-     * the converter will become null and an exception will be thrown.
+     * of the FieldConverter, if possible. If successful, the
+     * return value will be zero (FieldConverter.VALID). If not,
+     * the object of the converter will become null and the return
+     * value will be non-zero. The specific meaning of a possible
+     * non-zero value is defined by the implementing subclass.
      */
-    void setString(String string);
+    int setString(String string);
     
     /**
      * Updates the FieldConverter state by setting its object.

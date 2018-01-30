@@ -1,0 +1,58 @@
+package ca.ualberta.cmput301w18.jdorn_subbook;
+
+
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * FieldConverter for subscription charge.
+ * Accepted text format is [digits].[digit][digit]
+ * (must have two decimal places, and no '$' prefix)
+ */
+public class SubscriptionChargeConverter implements FieldConverter<Integer> {
+    private Integer charge;
+    private String string;
+    
+    public final int INVALID_FORMAT = 1;
+    
+    private static Pattern pattern = Pattern.compile("^(\\d+)\\.(\\d\\d)$");
+    
+    public Integer getObject() {
+        return this.charge;
+    }
+    
+    public String getString() {
+        return this.string;
+    }
+    
+    public void setObject(Integer charge) {
+        this.charge = charge;
+        
+        // Convert charge to string
+        // (this implementation probably isn't very localizable)
+        this.string = String.format(Locale.US, "%01d.%02d",
+                this.charge/100, this.charge%100);
+    }
+    
+    public int setString(String string) {
+        this.string = string;
+        
+        // Convert string to charge: match appropriate pattern
+        Matcher matcher = pattern.matcher(string);
+        if (!matcher.matches()) {
+            this.string = null;
+            this.charge = null;
+            return INVALID_FORMAT;
+        }
+        
+        // Extract dollars and cents ranges from string
+        int dollars = Integer.valueOf(matcher.group(0));
+        int cents = Integer.valueOf(matcher.group(1));
+        
+        // Combine to get number of cents --> total charge
+        this.charge = dollars * 100 + cents;
+        
+        return VALID;
+    }
+}
