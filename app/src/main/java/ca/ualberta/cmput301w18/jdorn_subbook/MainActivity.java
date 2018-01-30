@@ -89,11 +89,11 @@ public class MainActivity extends ListActivity {
                     // edit an existing subscription by replacing it
                     this.subscriptionList.replaceSubscriptionAt(index, subscription);
                 }
-                
-                // update the list view and summary
-                ((SubscriptionListAdapter)(this.getListAdapter())).notifyDataSetChanged();
-                this.updateSummary();
             }
+    
+            // update the list view and summary
+            ((SubscriptionListAdapter)(this.getListAdapter())).notifyDataSetChanged();
+            this.updateSummary();
         }
     }
     

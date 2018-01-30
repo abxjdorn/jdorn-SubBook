@@ -49,12 +49,18 @@ public class EditSubscriptionActivity extends Activity {
         this.findViewById(R.id.button_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finishEditActivity();
+                finishEditAndSave();
+            }
+        });
+        this.findViewById(R.id.button_delete).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finishEditAndDelete();
             }
         });
     }
     
-    private void finishEditActivity() {
+    private void finishEditAndSave() {
         // get fields
         EditText nameField = this.findViewById(R.id.edit_name);
         EditText chargeField = this.findViewById(R.id.edit_charge);
@@ -89,6 +95,11 @@ public class EditSubscriptionActivity extends Activity {
         }
         
         this.setResult(RESULT_OK, intent);
+        this.finish();
+    }
+    
+    private void finishEditAndDelete() {
+        this.setResult(RESULT_SUBSCRIPTION_DELETED, this.getIntent());
         this.finish();
     }
 }
