@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.Date;
@@ -43,6 +44,12 @@ public class EditSubscriptionActivity extends Activity {
             chargeField.setText(this.chargeConverter.getString());
             dateField.setText(this.dateConverter.getString());
             commentField.setText(subscription.getComment());
+        }
+        else {
+            // this is a new subscription - don't fill anything, but do disable the delete button
+            Button deleteButton = this.findViewById(R.id.button_delete);
+            
+            deleteButton.setVisibility(View.INVISIBLE);
         }
         
         // Set interaction handlers
