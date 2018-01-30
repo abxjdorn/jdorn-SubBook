@@ -14,18 +14,19 @@ public class SubscriptionChargeConverter implements FieldConverter<Integer> {
     private Integer charge;
     private String string;
     
-    public final int INVALID_FORMAT = 1;
-    
     private static Pattern pattern = Pattern.compile("^(\\d+)\\.(\\d\\d)$");
     
+    @Override
     public Integer getObject() {
         return this.charge;
     }
     
+    @Override
     public String getString() {
         return this.string;
     }
     
+    @Override
     public void setObject(Integer charge) {
         this.charge = charge;
         
@@ -35,6 +36,7 @@ public class SubscriptionChargeConverter implements FieldConverter<Integer> {
                 this.charge/100, this.charge%100);
     }
     
+    @Override
     public int setString(String string) {
         this.string = string;
         
@@ -47,8 +49,8 @@ public class SubscriptionChargeConverter implements FieldConverter<Integer> {
         }
         
         // Extract dollars and cents ranges from string
-        int dollars = Integer.valueOf(matcher.group(0));
-        int cents = Integer.valueOf(matcher.group(1));
+        int dollars = Integer.valueOf(matcher.group(1));
+        int cents = Integer.valueOf(matcher.group(2));
         
         // Combine to get number of cents --> total charge
         this.charge = dollars * 100 + cents;

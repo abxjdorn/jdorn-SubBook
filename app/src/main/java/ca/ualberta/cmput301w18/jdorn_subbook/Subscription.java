@@ -4,7 +4,6 @@ import android.text.format.DateFormat;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Locale;
 
 /**
  * Entity class representing a single subscription.
@@ -44,11 +43,6 @@ public class Subscription implements Serializable {
     /** Returns the date of the subscription. */
     public Date getDate() {
         return this.date;
-    }
-    
-    /** Returns the date of the subscription formatted as a string. */
-    public String getDateAsString() {
-        return DateFormat.format("yyyy-MM-dd", this.date).toString();
     }
     
     /** Returns the charge of the subscription, as an integer number of cents. */

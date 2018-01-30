@@ -19,6 +19,7 @@ public class SubscriptionListAdapter extends ArrayAdapter<Subscription> {
     private LayoutInflater layoutInflater;
     
     private SubscriptionChargeConverter chargeConverter = new SubscriptionChargeConverter();
+    private SubscriptionDateConverter dateConverter = new SubscriptionDateConverter();
     
     public SubscriptionListAdapter(Context context, SubscriptionList subscriptionList) {
         super(context, R.layout.listitem_subscription, subscriptionList.getSubscriptions());
@@ -49,11 +50,13 @@ public class SubscriptionListAdapter extends ArrayAdapter<Subscription> {
         
         // Convert non-text fields to text using converters
         this.chargeConverter.setObject(subscription.getCharge());
+        this.dateConverter.setObject(subscription.getDate());
         
         // Write subscription parameters to screen
         nameView.setText(subscription.getName());
-        dateView.setText(subscription.getDateAsString());
-        chargeView.setText(String.format(Locale.US, "$%s", chargeConverter.getString()));
+        dateView.setText(this.dateConverter.getString());
+        chargeView.setText(String.format(Locale.US, "$%s",
+                this.chargeConverter.getString()));
         commentView.setText(subscription.getComment());
         
         return view;

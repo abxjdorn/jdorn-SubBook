@@ -18,6 +18,7 @@ public interface FieldConverter<T> {
      * to object conversion.
      */
     int VALID = 0;
+    int INVALID_FORMAT = 1;
     
     /**
      * Gets the string representation of the current state

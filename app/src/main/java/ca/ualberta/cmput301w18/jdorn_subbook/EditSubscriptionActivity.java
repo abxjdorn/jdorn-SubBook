@@ -14,6 +14,9 @@ public class EditSubscriptionActivity extends Activity {
             "ca.ualberta.cmput301w18.jdorn_subbook.SUBSCRIPTION_DATA";
     public static final int RESULT_SUBSCRIPTION_DELETED = 2;
     
+    private SubscriptionChargeConverter chargeConverter = new SubscriptionChargeConverter();
+    private SubscriptionDateConverter dateConverter = new SubscriptionDateConverter();
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,14 +28,20 @@ public class EditSubscriptionActivity extends Activity {
         
         // Populate editing fields with existing subscription data
         if (subscription != null) {
+            // extract raw fields
             EditText nameField = this.findViewById(R.id.edit_name);
             EditText chargeField = this.findViewById(R.id.edit_charge);
             EditText dateField = this.findViewById(R.id.edit_date);
             EditText commentField = this.findViewById(R.id.edit_comment);
             
+            // convert non-text fields to text with converters
+            this.chargeConverter.setObject(subscription.getCharge());
+            this.dateConverter.setObject(subscription.getDate());
+            
+            // populate fields
             nameField.setText(subscription.getName());
-            chargeField.setText(subscription.getCharge().toString());
-            dateField.setText(subscription.getDateAsString());
+            chargeField.setText(this.chargeConverter.getString());
+            dateField.setText(this.dateConverter.getString());
             commentField.setText(subscription.getComment());
         }
         
@@ -46,6 +55,7 @@ public class EditSubscriptionActivity extends Activity {
     }
     
     private void finishEditActivity() {
+        // get fields
         EditText nameField = this.findViewById(R.id.edit_name);
         EditText chargeField = this.findViewById(R.id.edit_charge);
         EditText dateField = this.findViewById(R.id.edit_date);
@@ -53,12 +63,26 @@ public class EditSubscriptionActivity extends Activity {
         
         Intent intent = this.getIntent();
         try {
-            String name = nameField.getText().toString();
-            Integer charge = Integer.valueOf(chargeField.getText().toString());
-            Date date = new Date(dateField.getText().toString());
-            String comment = commentField.getText().toString();
+            // Attempt to create a new subscription out of the entered data
             
-            Subscription subscription = new Subscription(name, date, charge, comment);
+            // get contents of fields
+            String nameText = nameField.getText().toString();
+            String chargeText = chargeField.getText().toString();
+            String dateText = dateField.getText().toString();
+            String commentText = commentField.getText().toString();
+            
+            // try to convert to non-text fields using converters
+            if (this.chargeConverter.setString(chargeText) != SubscriptionChargeConverter.VALID) {
+                return;
+            }
+            else if (this.dateConverter.setString(dateText) != SubscriptionDateConverter.VALID) {
+                return;
+            }
+            
+            Integer charge = chargeConverter.getObject();
+            Date date = dateConverter.getObject();
+            
+            Subscription subscription = new Subscription(nameText, date, charge, commentText);
             intent.putExtra(EXTRA_SUBSCRIPTION_DATA, subscription);
         } catch (InvalidSubscriptionParameterException e) {
             e.printStackTrace();
