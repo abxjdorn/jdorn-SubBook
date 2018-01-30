@@ -7,9 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.Locale;
 
 public class MainActivity extends ListActivity {
     public static final String EXTRA_TARGET_INDEX =
@@ -38,7 +40,9 @@ public class MainActivity extends ListActivity {
             e.printStackTrace();
         }
         
+        // Initialize list and summary
         this.setListAdapter(new SubscriptionListAdapter(this, subscriptionList));
+        this.updateSummary();
         
         // Set interaction handlers
         this.findViewById(R.id.button_add).setOnClickListener(new View.OnClickListener() {
@@ -86,8 +90,9 @@ public class MainActivity extends ListActivity {
                     this.subscriptionList.replaceSubscriptionAt(index, subscription);
                 }
                 
-                // update the list view
+                // update the list view and summary
                 ((SubscriptionListAdapter)(this.getListAdapter())).notifyDataSetChanged();
+                this.updateSummary();
             }
         }
     }
@@ -101,6 +106,20 @@ public class MainActivity extends ListActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    /**
+     * Updates the list summary information (total of charges).
+     */
+    private void updateSummary() {
+        // Use converter to get correct formatting
+        SubscriptionChargeConverter chargeConverter = new SubscriptionChargeConverter();
+        
+        TextView totalView = findViewById(R.id.summary_total);
+        
+        Integer totalCharge = this.subscriptionList.getTotalCharge();
+        chargeConverter.setObject(totalCharge);
+        totalView.setText(String.format(Locale.US, "$%s", chargeConverter.getString()));
     }
     
     private void startEditActivity(int index) {

@@ -53,4 +53,13 @@ public class SubscriptionList {
     public Subscription getSubscriptionAt(int index) {
         return this.subscriptions.get(index);
     }
+    
+    /** Calculates the total charge of all the subscriptions in the list. */
+    public Integer getTotalCharge() {
+        int total = 0;
+        for (Subscription s: subscriptions) {
+            total += s.getCharge();
+        }
+        return total;
+    }
 }
