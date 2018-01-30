@@ -6,6 +6,7 @@ import android.os.Parcel;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 
 import java.util.Date;
 
@@ -51,29 +52,47 @@ public class MainActivity extends ListActivity {
                 startEditActivity(INDEX_NEW);
             }
         });
+        
+        this.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                startEditActivity(i);
+            }
+        });
     }
     
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        
         if (requestCode == REQUEST_EDIT_SUBSCRIPTION) {
             if (resultCode == EditSubscriptionActivity.RESULT_SUBSCRIPTION_DELETED) {
+                // Edit activity reports delete button pressed - delete the subscription
                 int index = data.getIntExtra(EXTRA_TARGET_INDEX, INDEX_NEW);
+                
                 if (index != INDEX_NEW) {
                     this.subscriptionList.deleteSubscriptionAt(index);
                 }
             }
             else if (resultCode == EditSubscriptionActivity.RESULT_OK) {
+                // Edit activity reports changes were made
                 int index = data.getIntExtra(EXTRA_TARGET_INDEX, INDEX_NEW);
+                
+                // get the new/edited subscription data
                 Subscription subscription = (Subscription) data.getSerializableExtra(
                         EditSubscriptionActivity.EXTRA_SUBSCRIPTION_DATA);
+                
                 if (index == INDEX_NEW) {
+                    // add a new subscription
                     this.subscriptionList.addSubscription(subscription);
-                    ((SubscriptionListAdapter)(this.getListAdapter())).notifyDataSetChanged();
                 }
                 else {
+                    // edit an existing subscription by replacing it
                     this.subscriptionList.replaceSubscriptionAt(index, subscription);
                 }
+                
+                // update the list view
+                ((SubscriptionListAdapter)(this.getListAdapter())).notifyDataSetChanged();
             }
         }
     }
