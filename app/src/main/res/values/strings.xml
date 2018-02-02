@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">jdorn-SubBook</string>
+    <string name="edit_name_hint">Subscription Name</string>
+    <string name="edit_charge_label">Monthly charge: $</string>
+    <string name="edit_date_label">Date started:</string>
+    <string name="edit_date_hint">YYYY-MM-DD</string>
+    <string name="edit_comment_label">Comment</string>
+    <string name="edit_save_button_label">save subscription</string>
+    <string name="edit_delete_button_label">delete</string>
+    <string name="view_total_label">Total</string>
+    <string name="view_total_placeholder">$--.--</string>
+    <string name="view_add_button_label">add subscription</string>
 </resources>

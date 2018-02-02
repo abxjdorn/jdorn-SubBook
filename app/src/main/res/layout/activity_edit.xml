@@ -15,7 +15,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:hint="Subscription Name"
+        android:hint="@string/edit_name_hint"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,9 +28,9 @@
         android:layout_below="@+id/edit_name"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:text="Monthly charge: "
+        android:text="@string/edit_charge_label"
         android:textAppearance="@android:style/TextAppearance.Medium"
-        app:layout_constraintBaseline_toBaselineOf="@+id/edit_date"
+        app:layout_constraintBaseline_toBaselineOf="@+id/edit_charge"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
@@ -43,7 +43,7 @@
         android:layout_marginTop="8dp"
         android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/label_date"
+        app:layout_constraintStart_toEndOf="@+id/label_charge"
         app:layout_constraintTop_toBottomOf="@+id/edit_name" />
 
     <TextView
@@ -53,9 +53,9 @@
         android:layout_below="@+id/label_charge"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:text="Date started: "
+        android:text="@string/edit_date_label"
         android:textAppearance="@android:style/TextAppearance.Medium"
-        app:layout_constraintBaseline_toBaselineOf="@+id/edit_charge"
+        app:layout_constraintBaseline_toBaselineOf="@+id/edit_date"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
@@ -67,8 +67,9 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:inputType="date"
+        android:hint="@string/edit_date_hint"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/label_charge"
+        app:layout_constraintStart_toEndOf="@+id/label_date"
         app:layout_constraintTop_toBottomOf="@+id/edit_charge" />
 
     <TextView
@@ -78,9 +79,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="48dp"
-        android:text="Comment"
+        android:text="@string/edit_comment_label"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/label_charge" />
+        app:layout_constraintTop_toBottomOf="@+id/label_date" />
 
     <EditText
         android:id="@+id/edit_comment"
@@ -100,7 +101,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:text="save subscription"
+        android:text="@string/edit_save_button_label"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -112,7 +113,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        android:text="delete"
+        android:text="@string/edit_delete_button_label"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 </android.support.constraint.ConstraintLayout>
