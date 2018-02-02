@@ -3,10 +3,15 @@ package ca.ualberta.cmput301w18.jdorn_subbook;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -18,6 +23,11 @@ public class EditSubscriptionActivity extends Activity {
     private SubscriptionChargeConverter chargeConverter = new SubscriptionChargeConverter();
     private SubscriptionDateConverter dateConverter = new SubscriptionDateConverter();
     
+    private SubscriptionNameValidator nameValidator;
+    private SubscriptionChargeValidator chargeValidator;
+    private SubscriptionDateValidator dateValidator;
+    private SubscriptionCommentValidator commentValidator;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,15 +36,14 @@ public class EditSubscriptionActivity extends Activity {
         Intent intent = this.getIntent();
         Subscription subscription = (Subscription) intent.getSerializableExtra(
                 MainActivity.EXTRA_TARGET_DATA);
+    
+        EditText nameField = this.findViewById(R.id.edit_name);
+        EditText chargeField = this.findViewById(R.id.edit_charge);
+        EditText dateField = this.findViewById(R.id.edit_date);
+        EditText commentField = this.findViewById(R.id.edit_comment);
         
         // Populate editing fields with existing subscription data
         if (subscription != null) {
-            // extract raw fields
-            EditText nameField = this.findViewById(R.id.edit_name);
-            EditText chargeField = this.findViewById(R.id.edit_charge);
-            EditText dateField = this.findViewById(R.id.edit_date);
-            EditText commentField = this.findViewById(R.id.edit_comment);
-            
             // convert non-text fields to text with converters
             this.chargeConverter.setObject(subscription.getCharge());
             this.dateConverter.setObject(subscription.getDate());
@@ -65,6 +74,17 @@ public class EditSubscriptionActivity extends Activity {
                 finishEditAndDelete();
             }
         });
+        
+        // Initialize field validity
+        this.nameValidator = new SubscriptionNameValidator(nameField);
+        this.chargeValidator = new SubscriptionChargeValidator(chargeField);
+        this.dateValidator = new SubscriptionDateValidator(dateField);
+        this.commentValidator = new SubscriptionCommentValidator(commentField);
+        
+        this.nameValidator.validate();
+        this.chargeValidator.validate();
+        this.dateValidator.validate();
+        this.commentValidator.validate();
     }
     
     private void finishEditAndSave() {
@@ -73,6 +93,14 @@ public class EditSubscriptionActivity extends Activity {
         EditText chargeField = this.findViewById(R.id.edit_charge);
         EditText dateField = this.findViewById(R.id.edit_date);
         EditText commentField = this.findViewById(R.id.edit_comment);
+        
+        // ensure all is valid
+        if (!(this.nameValidator.isValid()
+            && this.chargeValidator.isValid()
+            && this.dateValidator.isValid()
+            && this.commentValidator.isValid())) {
+                return;
+        }
         
         Intent intent = this.getIntent();
         try {
