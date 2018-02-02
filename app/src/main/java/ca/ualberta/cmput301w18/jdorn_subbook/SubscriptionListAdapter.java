@@ -2,7 +2,6 @@ package ca.ualberta.cmput301w18.jdorn_subbook;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,21 +17,37 @@ public class SubscriptionListAdapter extends ArrayAdapter<Subscription> {
     /** LayoutInflater used to produce Views */
     private LayoutInflater layoutInflater;
     
+    /** Converter for formatting Subscription charges for display */
     private SubscriptionChargeConverter chargeConverter = new SubscriptionChargeConverter();
+    
+    /** Converter for formatting Subscription dates for display. */
     private SubscriptionDateConverter dateConverter = new SubscriptionDateConverter();
     
-    public SubscriptionListAdapter(Context context, SubscriptionList subscriptionList) {
+    /**
+     * Creates a SubscriptionListAdapter over the specified SubscriptionList,
+     * using the specified Context for instantiating the superclass Adapter.
+     *
+     * @param context passed to Adapter superclass
+     * @param subscriptionList List of subscriptions to adapt
+     */
+    SubscriptionListAdapter(Context context, SubscriptionList subscriptionList) {
         super(context, R.layout.listitem_subscription, subscriptionList.getSubscriptions());
         
         this.layoutInflater = (LayoutInflater)
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
     
+    /**
+     * View generator function
+     * @param position index to create view for, as in ListAdapter.getView
+     * @param convertView Existing view to reuse, as in ListAdapter.getView
+     * @param parent Parent view, as in ListAdapter.getView
+     * @return View representing the Subscription at the specified index
+     */
     @Override
     @NonNull
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-        Subscription subscription = this.getItem(position);
-        
+        // Create a new view if necessary, but reuse existing view if available
         View view;
         if (convertView == null) {
             view = this.layoutInflater.inflate(
@@ -40,6 +55,14 @@ public class SubscriptionListAdapter extends ArrayAdapter<Subscription> {
         }
         else {
             view = convertView;
+        }
+        
+        // Get view at index
+        Subscription subscription = this.getItem(position);
+        if (subscription == null) {
+            // don't throw exception if failed to get subscription
+            // (but can't return a correct view)
+            return view;
         }
         
         // Retrieve raw parameters from subscription
