@@ -120,6 +120,9 @@ public class MainActivity extends ListActivity {
         Integer totalCharge = this.subscriptionList.getTotalCharge();
         chargeConverter.setObject(totalCharge);
         totalView.setText(String.format(Locale.US, "$%s", chargeConverter.getString()));
+        
+        // Ensures that the TextView stays right-aligned even if the content width changes
+        totalView.forceLayout();
     }
     
     private void startEditActivity(int index) {
