@@ -9,11 +9,17 @@ import java.util.regex.Pattern;
  * FieldConverter for subscription charge.
  * Accepted text format is [digits].[digit][digit]
  * (must have two decimal places, and no '$' prefix)
+ *
+ * @see FieldConverter
  */
 public class SubscriptionChargeConverter implements FieldConverter<Integer> {
+    /** Target object: integer representing charge as a number of cents */
     private Integer charge;
+    
+    /** Target string */
     private String string;
     
+    /** Regular expression matching valid inputs ([digits].[digit][digit]) */
     private static Pattern pattern = Pattern.compile("^(\\d+)\\.(\\d\\d)$");
     
     @Override

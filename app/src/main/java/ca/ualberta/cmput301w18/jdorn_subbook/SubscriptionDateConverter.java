@@ -8,10 +8,20 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * FieldConverter for subscription date.
+ * Conversions are done via SimpleDateFormat with pattern 'yyyy-MM-dd'.
+ *
+ * @see FieldConverter
+ */
 public class SubscriptionDateConverter implements FieldConverter<Date> {
+    /** Target object */
     private Date date;
+    
+    /** Target string */
     private String string;
     
+    /** Date formatter */
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
     
     @Override

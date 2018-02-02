@@ -11,6 +11,11 @@ package ca.ualberta.cmput301w18.jdorn_subbook;
  * all strings need be convertible to object - thus the object of
  * the converter may be null. In this state, attempting to retrieve
  * the string representation will also yield null.
+ *
+ * @param <T> type that the converter converts to/from. The intended
+ *            use is for implementations to implement FieldConverter
+ *            of some type in order to convert to/from that type, rather
+ *            than implementing FieldConverter as a generic.
  */
 public interface FieldConverter<T> {
     /**
@@ -18,19 +23,25 @@ public interface FieldConverter<T> {
      * to object conversion.
      */
     int VALID = 0;
+    
+    /**
+     * Return value representing a generic conversion failure.
+     */
     int INVALID_FORMAT = 1;
     
     /**
      * Gets the string representation of the current state
-     * of the FieldConverter. May be null if the converter
-     * state is invalid.
+     * of the FieldConverter.
+     *
+     * @return string representation of the current state. May be null if state is invalid.
      */
     String getString();
     
     /**
      * Gets the object representation of the current state
-     * of the FieldConverter. May be null if the converter
-     * state is invalid.
+     * of the FieldConverter.
+     *
+     * @return object representation of the current state. May be null if state is invalid.
      */
     T getObject();
     
@@ -42,6 +53,9 @@ public interface FieldConverter<T> {
      * the object of the converter will become null and the return
      * value will be non-zero. The specific meaning of a possible
      * non-zero value is defined by the implementing subclass.
+     *
+     * @param string string to attempt to convert
+     * @return value representing whether the conversion succeeded
      */
     int setString(String string);
     
@@ -50,6 +64,8 @@ public interface FieldConverter<T> {
      * The object will also be converted into a string representing
      * it (such that passing the string to setString will recreate
      * the object).
+     *
+     * @param object object to convert
      */
     void setObject(T object);
 }
