@@ -10,4 +10,5 @@
     <string name="view_total_label">Total</string>
     <string name="view_total_placeholder">$--.--</string>
     <string name="view_add_button_label">add subscription</string>
+    <string name="format_charge">$%s</string>
 </resources>

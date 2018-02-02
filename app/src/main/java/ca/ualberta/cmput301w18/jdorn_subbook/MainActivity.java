@@ -2,15 +2,12 @@ package ca.ualberta.cmput301w18.jdorn_subbook;
 
 import android.app.ListActivity;
 import android.content.Intent;
-import android.os.Parcel;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.Locale;
 
 public class MainActivity extends ListActivity {
@@ -100,7 +97,7 @@ public class MainActivity extends ListActivity {
     @Override
     protected void onPause() {
         super.onPause();
-    
+        
         try {
             this.subscriptionListLoader.save(this.subscriptionList);
         } catch (IOException e) {
@@ -112,14 +109,16 @@ public class MainActivity extends ListActivity {
      * Updates the list summary information (total of charges).
      */
     private void updateSummary() {
-        // Use converter to get correct formatting
         SubscriptionChargeConverter chargeConverter = new SubscriptionChargeConverter();
-        
         TextView totalView = findViewById(R.id.summary_total);
         
+        // Get total charge and convert to string
         Integer totalCharge = this.subscriptionList.getTotalCharge();
         chargeConverter.setObject(totalCharge);
-        totalView.setText(String.format(Locale.US, "$%s", chargeConverter.getString()));
+        
+        // Add a dollar sign to the string and place it in the TextView
+        totalView.setText(String.format(Locale.US, getString(R.string.format_charge),
+                chargeConverter.getString()));
         
         // Ensures that the TextView stays right-aligned even if the content width changes
         totalView.forceLayout();

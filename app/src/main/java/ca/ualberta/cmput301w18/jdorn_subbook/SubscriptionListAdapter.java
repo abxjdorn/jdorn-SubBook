@@ -55,7 +55,7 @@ public class SubscriptionListAdapter extends ArrayAdapter<Subscription> {
         // Write subscription parameters to screen
         nameView.setText(subscription.getName());
         dateView.setText(this.dateConverter.getString());
-        chargeView.setText(String.format(Locale.US, "$%s",
+        chargeView.setText(String.format(Locale.US, getContext().getString(R.string.format_charge),
                 this.chargeConverter.getString()));
         commentView.setText(subscription.getComment());
         
